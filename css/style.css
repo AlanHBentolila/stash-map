@@ -1,0 +1,175 @@
+/* ---------- Colours (change these to restyle the whole site) ---------- */
+:root {
+  --bg: #0f1a17;
+  --panel: #16241f;
+  --panel-2: #1d2f29;
+  --line: #2a4038;
+  --text: #eef5f1;
+  --muted: #9db3aa;
+  --money: #2fd27a;
+  --money-ink: #0f1a17;
+  --done: #5d6f68;
+  --radius: 14px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: calc(10px + env(safe-area-inset-top)) 16px 8px;
+  background: var(--panel);
+}
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.logo {
+  display: grid; place-items: center;
+  width: 36px; height: 36px; flex: none;
+  border-radius: 10px;
+  background: var(--money); color: var(--money-ink);
+  font-weight: 800; font-size: 22px;
+}
+.brand h1 { margin: 0; font-size: 19px; letter-spacing: .3px; }
+.tagline { margin: 0; font-size: 12px; color: var(--muted); }
+.lang-btn {
+  flex: none;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel-2);
+  font-size: 14px;
+}
+
+/* ---------- Progress ---------- */
+.progress { padding: 0 16px 10px; background: var(--panel); border-bottom: 1px solid var(--line); }
+.progress-text { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.progress-text strong { color: var(--money); }
+.progress-bar { height: 6px; border-radius: 6px; background: var(--panel-2); overflow: hidden; }
+.progress-bar span { display: block; height: 100%; width: 0; background: var(--money); transition: width .3s; }
+
+/* ---------- Views ---------- */
+main { position: relative; flex: 1; min-height: 0; }
+.view { position: absolute; inset: 0; display: none; }
+.view.active { display: block; }
+#map { width: 100%; height: 100%; background: #3a6a80; }
+.leaflet-container { font-family: var(--font); }
+#view-list { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+.pick-hint {
+  position: absolute; left: 16px; right: 16px; top: 12px; z-index: 500;
+  padding: 10px 12px; border-radius: 10px;
+  background: #000c; color: #fff; font-size: 14px; text-align: center;
+}
+
+/* ---------- Map pins ---------- */
+.pin {
+  display: grid; place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: var(--money);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px #0008;
+}
+.pin span { transform: rotate(45deg); color: var(--money-ink); font-weight: 800; font-size: 16px; }
+.pin.done { background: var(--done); }
+.pin.done span { color: #fff; }
+
+/* Popup */
+.leaflet-popup-content-wrapper { background: var(--panel); color: var(--text); border-radius: var(--radius); }
+.leaflet-popup-tip { background: var(--panel); }
+.leaflet-popup-content { margin: 14px 16px; font-size: 14px; line-height: 1.4; }
+.leaflet-container a.leaflet-popup-close-button { color: var(--muted); width: 32px; height: 32px; font-size: 22px; }
+.popup h3 { margin: 0 24px 4px 0; font-size: 16px; }
+.popup p { margin: 0 0 10px; color: var(--muted); }
+.money { color: var(--money); font-weight: 800; font-size: 18px; }
+
+/* Collected toggle (used in popup and list) */
+.check {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--money);
+  background: transparent; color: var(--money);
+  font-weight: 600; font-size: 14px;
+}
+.check .box {
+  width: 20px; height: 20px; border-radius: 6px;
+  border: 2px solid currentColor;
+  display: grid; place-items: center; font-size: 13px; line-height: 1;
+}
+.check[aria-pressed="true"] { background: var(--money); color: var(--money-ink); }
+
+/* ---------- List ---------- */
+.list-wrap { max-width: 640px; margin: 0 auto; padding: 16px 16px 24px; }
+.list-wrap h2 { font-size: 17px; margin: 4px 0 12px; }
+.stash-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 12px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+.card h3 { margin: 0; font-size: 16px; }
+.card .money { text-align: right; white-space: nowrap; }
+.card p { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+.card .actions { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.card.done { opacity: .6; }
+.card.done h3 { text-decoration: line-through; }
+.ghost {
+  min-height: 44px; padding: 0 14px;
+  border-radius: 999px; border: 1px solid var(--line);
+  background: var(--panel-2); font-size: 14px;
+}
+
+.note { color: var(--muted); font-size: 13px; margin: 18px 0 6px; }
+.link-btn { background: none; border: 0; padding: 8px 0; color: var(--muted); text-decoration: underline; font-size: 13px; }
+.credits { margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.5; }
+.credits a { color: var(--text); }
+
+/* ---------- Bottom tabs ---------- */
+.tabs {
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  min-height: 58px; padding: 8px 0;
+  background: none; border: 0; color: var(--muted); font-size: 12px;
+}
+.tab svg { width: 24px; height: 24px; fill: currentColor; }
+.tab.active { color: var(--money); }
+
+/* Leaflet attribution: small and readable on dark map edge */
+.leaflet-control-attribution { font-size: 10px; max-width: 70vw; }
+
+@media (min-width: 900px) {
+  .tabs { max-width: 420px; margin: 0 auto; width: 100%; border-radius: 16px 16px 0 0; border: 1px solid var(--line); }
+}
